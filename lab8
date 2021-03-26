@@ -1,0 +1,112 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+
+int main()
+{
+    int N;
+    cout<<"Enter the size of the matrix: ";
+    cin>> N;
+    // creating an NxN matrix A
+     int ** A = new int *[N];
+    for(int i = 0; i<N;i++){
+        A[i] = new int[N];
+    }
+
+    /*A 1-D array of size equal to the number of non-zero elements in
+    the lower triangular matrix A*/
+    
+    int B[N*(1+N)/2] = {0}; int i, j, count = 0;
+    
+    // New array C to recreate lower triangular matrix of size N using B
+    int ** C = new int *[N];
+    for(int i = 0; i<N;i++){
+        C[i] = new int[N];
+    }
+    
+    // assigning random values for A,different each time
+    srand((unsigned) time(0));
+    cout<<"\nPrinting the original array A \n";
+    for (int i = 0; i < N; i++){
+            for (int j = 0; j < N; j++){
+                if(i>=j){
+                    A[i][j] = rand() % 1000 +1;
+                }
+                else A[i][j]=0;
+                cout<<A[i][j]<<"  ";
+            }
+            cout<<endl;
+    }
+    
+    // generating index position of elements for B and storing the elements
+    
+    for(i = 0; i < N; i++) {
+        for(j = 0; j < N; j++){ 
+                 if(A[i][j] != 0)
+
+                    B[count++] = A[i][j];
+            }
+    }
+    
+    cout<<"\n Printing the 1D array B \n";
+     for(i = 0; i < N*(1+N)/2; i++) 
+        cout<<" "<< B[i];  
+    cout<<endl;
+    
+    cout<<"\n Printing the new 2-D array C \n";
+
+    for(i=0; i<N; i++){
+        for(j=0;j<N;j++){
+            if(j>i){
+                C[i][j] = 0;
+            }
+            else C[i][j] = B[N*i - i*(i+1)/2 + j];
+            cout<<C[i][j]<<"  ";
+        }
+        cout<<endl;
+    }
+    cout<< endl;
+    
+    //printing A in row major order
+    cout<<"\n Printing in row major order\n";
+    cout<<"\n The first 20 elements of A are \n";
+    
+    for (int i = 0; i < 6; i++){
+        for (int j = 0; j < 5; j++){
+            if(A[i][j]!=0){
+                    
+                cout << "A[" << i << "][" << j << "]: ";
+                cout << A[i][j] << endl;
+                    
+            }
+                
+        }
+    }
+    
+        
+    // printing the first 20 elements of B.
+    cout<<"\n The first 20 elements of B are \n";
+    for(int i=0;i<20;i++){
+        cout << "B[" << i << "]";
+        cout<<B[i]<<endl;
+    }
+    
+    // printing the first 20 elements of C.
+    cout<<"\n The first 20 elements of C are \n";
+    int counter =1;
+    for (int i = 0; i < N; i++){
+        for (int j = 0; j < N; j++){
+            if(counter<=20){        
+                cout << "C[" << i << "][" << j << "]: ";
+                cout << C[i][j] << endl;
+                counter++;
+            }
+               
+        }
+    }
+    
+    
+   return 0; 
+} 
