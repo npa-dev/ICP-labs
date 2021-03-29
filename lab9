@@ -1,0 +1,87 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+#include <ctime>
+
+int** creatematrix(int N);
+void searchValidEntries(int XL, int YL, int XH, int YH);
+int** populateArray(int N);
+void printArray(int N);
+
+// function to create a matrix of size N and initialize all the values to zero
+int** creatematrix(int N){
+    
+    int ** A = new int *[N];
+    for(int i = 0; i<N;i++){
+        A[i] = new int[N];
+    }
+    for(int i =0; i<N; i++){
+        for(int j =0; j<N; j++){
+            A[i][j]=0;
+            
+        }
+    }
+   return A;
+}
+
+/* This function populates the array. If the value at a randomly generated
+index position is 0, it assigns the value of 1 to it. If the value is already
+greater than zero, it increases the value by 1.
+*/
+int** populateArray(int N){
+    int** A = creatematrix(N);
+    srand((unsigned) time(0));
+    for(int position = 1; position <=2000; position++){
+       int random_i = rand() % N;
+       int random_j = rand() % N;
+       if(A[random_i][random_j]==0)A[random_i][random_j]=1;
+       else A[random_i][random_j]+=1;
+    }
+    return A;
+}
+
+/*
+This function defines a box using given index positions, and returns all the 
+non-zero values within the defined box.
+*/
+void searchValidEntries(int N, int XL, int YL, int XH, int YH){
+    int** temp = populateArray(N);
+    for(int i=XL; i<=XH;i++){
+        for(int j=YL; j<=YH;j++){
+             if(temp[i][j]>0)
+            cout<<"A["<<i<<"]["<<j<<"] : "<<temp[i][j]<<endl;
+        }
+    }
+}
+
+//This function prints out the populated array.
+void printArray(int N){
+    for(int i=0; i<N;i++){
+        for(int j=0; j<N; j++){
+            cout<<populateArray(N)[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+
+
+
+int main()
+{
+   // calling the functions with respective arguments
+   populateArray(101);
+   cout<<"\n For the box bounded by (80,1,100,10)"<<endl<<endl;
+   searchValidEntries(101, 80,1,100,10);
+   cout<<"\n For the box bounded by (10,20,40,79)"<<endl<<endl;
+   searchValidEntries(101,10,20,40,79);
+   cout<<"\nFor the box bounded by (90,100,100) "<<endl<<endl;
+   searchValidEntries(101,1,90,100,100);
+   cout<<"\nFor the box bounded by (40,30,70,60) "<<endl<<endl;
+   searchValidEntries(101,40,30,70,60);
+   cout<<"\nFor the box bounded by (50,50,70,70) "<<endl<<endl;
+   searchValidEntries(101, 50,50,70,70);
+
+
+
+    return 0;
+}
