@@ -1,0 +1,20 @@
+linestab : testStabLineProg.o readPoints.o readLines.o printLineByCoords.o getStabbedLines.o \
+			g++ -o testStabLineProg.o readPoints.o readLines.o printLineByCoords.o getStabbedLines.o
+
+testStabLineProg.o : stabbingLines.h readPoints.cpp readLines.cpp printLineByCoords.cpp getStabbedLines.cpp testStabLineProg.cpp
+					  g++ -c testStabLineProg.cpp 
+
+readPoints.o : readPoints.cpp
+			   g++ -c readPoints.cpp
+
+readLines.o : readLines.cpp
+			   g++ -c readLines.cpp
+
+printLineByCoords.o : printLineByCoords.cpp
+			   g++ -c printLineByCoords.cpp
+
+getStabbedLines.o : getStabbedLines.cpp
+			   g++ -c getStabbedLines.cpp
+
+clean : 
+		rm linestab testStabLineProg.o readPoints.o readLines.o printLineByCoords.o getStabbedLines.o
